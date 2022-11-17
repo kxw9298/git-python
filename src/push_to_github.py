@@ -1,6 +1,7 @@
 import requests
 import json
 import base64
+import os
 
 def push_to_github(filename_to, filename_from, repo, branch, token):
     url="https://api.github.com/repos/"+repo+"/contents/"+filename_to
@@ -22,7 +23,7 @@ def push_to_github(filename_to, filename_from, repo, branch, token):
     else:
         print("nothing to update")
 
-token = "ghp_xxxxxx"
+token = os.getenv('GITHUB_TOKEN')
 filename_from="README.md"
 filename_to="src/README.md"
 repo = "kxw9298/git-python"

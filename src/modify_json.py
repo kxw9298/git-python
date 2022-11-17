@@ -3,6 +3,7 @@ import datetime;
 import requests
 import json
 import base64
+import os
 
 def github_read_file(username, repository_name, branch, file_path, token):
     headers = {}
@@ -34,7 +35,7 @@ def push_to_github(base64content, sha, username, repository_name, branch, file_p
 
     print(resp)
 
-token = "ghp_xxxxx"
+token = os.getenv('GITHUB_TOKEN')
 file_path = "src/sample/data.json"
 username = "kxw9298"
 repository_name = "git-python"
