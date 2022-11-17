@@ -4,11 +4,6 @@ import requests
 import json
 import base64
 
-
-
-
-
-
 def github_read_file(username, repository_name, branch, file_path, token):
     headers = {}
 
@@ -16,6 +11,7 @@ def github_read_file(username, repository_name, branch, file_path, token):
     url = f'https://api.github.com/repos/{username}/{repository_name}/contents/{file_path}'
     r = requests.get(url, headers=headers)
     data = requests.get(url+'?ref='+branch, headers = {"Authorization": "token "+token}).json()
+    print(data)
     sha = data['sha']
     # r.raise_for_status()
     # data = r.json()
@@ -38,7 +34,7 @@ def push_to_github(base64content, sha, username, repository_name, branch, file_p
 
     print(resp)
 
-token = "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"
+token = "ghp_xxxxx"
 file_path = "src/sample/data.json"
 username = "kxw9298"
 repository_name = "git-python"
