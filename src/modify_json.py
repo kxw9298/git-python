@@ -1,7 +1,7 @@
 import json
 import datetime;
 
-with open('sample.json', 'r+') as f:
+with open('./sample/data.json', 'r+') as f:
     data = json.load(f)
     data['time'] = str(datetime.datetime.now())
     f.seek(0)        # <--- should reset file position to the beginning.
