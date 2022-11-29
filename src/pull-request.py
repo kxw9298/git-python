@@ -21,7 +21,7 @@ def create_branch(target):
     print(r.content)
 
 
-def read_github_file_and_update_content(target):
+def read_github_file(target):
     repo_name = target.get("repo_name")
     branch_name = target.get("branch_name")
     file_path = target.get("file_path")
@@ -41,16 +41,33 @@ def read_github_file_and_update_content(target):
         "file_contents": file_content
     }
 
+def replace_text_in_file_content(target):
+    file_contents = target.get("file_contents")
+    text_to_search = target.get("text_to_search")
+    text_to_replace = target.get("text_to_replace")
+
+    file_contents = file_contents.replace(text_to_search, text_to_replace)
+    print(file_contents)
+    return {
+        "file_contents": file_contents
+    }
+
 
 target_create_branch = {
     "repo_name": "git-python",
     "branch_name": "test"}
 
-target_read_file_and_update = {
+target_read_file = {
     "repo_name": "git-python",
     "branch_name": "test",
     "file_path": "src/sample/application.properties"
 }
 
 # create_branch(target_create_branch)
-read_github_file_and_update_content(target_read_file_and_update)
+output = read_github_file(target_read_file)
+target_replace_text_in_file_content = {
+    "file_contents": output.get('file_contents'),
+   "text_to_search": "10.0.0.0",
+   "text_to_replace": "10.0.0.2"
+}
+replace_text_in_file_content(target_replace_text_in_file_content)
