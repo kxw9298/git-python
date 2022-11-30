@@ -124,6 +124,29 @@ def get_repository_branch_sha(target):
     else:
         raise Exception(r.json)
 
+def create_pull_request(target):
+    repo_name = target.get("repo_name")
+    source_branch = target.get("source_branch")
+    target_branch = target.get("target_branch")
+    title = target.get("title")
+    body = target.get("body")
+    url= f"{github_url}/repos/{org}/{repo_name}/pulls"
+    payload = {
+        "title": title,
+        "body": body,
+        "head": source_branch,
+        "base": target_branch
+    }
+    r = requests.post(
+        url,
+        headers=headers,
+        json=payload
+    )
+    if r.ok:
+        return r.json()
+    else:
+        raise Exception(r.json)
+
 target_create_branch = {
     "repo_name": "git-python",
     "branch_name": "test"}
@@ -141,11 +164,19 @@ file_contents_updated = replace_text_in_file_content({
    "text_to_search": "10.0.0.0",
    "text_to_replace": "10.0.0.2"
 })
-create_or_update_repository_file({
-    **file_contents_updated,
-    "file_sha": file_contents.get("file_sha"),
+# create_or_update_repository_file({
+#     **file_contents_updated,
+#     "file_sha": file_contents.get("file_sha"),
+#     "repo_name": "git-python",
+#     "branch_name": "test",
+#     "file_path": "src/sample/application.properties",
+#     "commit_message": "fix"
+# })
+
+create_pull_request({
     "repo_name": "git-python",
-    "branch_name": "test",
-    "file_path": "src/sample/application.properties",
-    "commit_message": "fix"
+    "title": "fix",
+    "body": "hot fix",
+    "source_branch": "test",
+    "target_branch": "main",
 })
